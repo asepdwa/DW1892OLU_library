@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './Assets/App.css';
 
-function App() {
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Link,
+//   Route,
+//   Redirect,
+// } from "react-router-dom";
+
+import LandingPage from './Pages/LandingPage';
+// import Home from './Pages/Home';
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  //   <Router>
+  //     <nav>
+  //       <ul style={{ display: "flex", flexDirection: "row" }}>
+  //         <li style={{ marginRight: 50 }}>
+  //           <Link to="/">Home</Link>
+  //         </li>
+  //         <li style={{ marginRight: 50 }}>
+  //           <Link to="/LandingPage">LandingPage</Link>
+  //         </li>
+  //       </ul>
+  //     </nav>
+  //     <Switch>
+  //       <Route path="/" component={Home} exact/>
+  //       <Route path="/LandingPage" component={LandingPage}/>
+  //     </Switch>
+
+  // </Router>
+      <LandingPage/>
   );
 }
-
-export default App;
