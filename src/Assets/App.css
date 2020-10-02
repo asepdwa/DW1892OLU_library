@@ -10,8 +10,7 @@
   background-color: white;
 }
 
-.FormTitle
-{
+.FormTitle {
   font-family: Arial;
   font-style: normal;
   font-weight: 700;
@@ -32,34 +31,60 @@
   color: white;
   font-size: 20px;
   margin-top: 30px;
+  line-height: 85%;
   text-shadow: 1.5px 1.5px black;
 }
 
-.App-header {
+.quote-md {
+  font-family: Times New Roman;
+  font-weight: bold;
+  font-size: 72px;
+  color: black;
+  line-height: 90%;
+}
+
+.note-md {
+  color: black;
+  font-size: 20px;
+  margin-top: 30px;
+  line-height: 85%;
+}
+
+.App-header-lp {
   margin: 30px 0px 0px 40px;
 }
 
-.App-header p {
+.App-header-lp p {
   font-family: Times New Roman;
   font-style: italic;
   font-weight: bold;
   font-size: 36px;
   line-height: 41px;
   text-decoration: none;
-  color:white; 
+  color: white;
   text-shadow: 1px 1px black;
 }
 
+.App-header {
+  font-family: Times New Roman;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 41px;
+  text-decoration: none;
+  color: black;
+}
+
 @media screen and (min-width: 768px) {
-  .App-header p {
-    color: black; 
+  .App-header-lp p {
+    color: black;
   }
 
   .quote {
     color: #000000;
     text-shadow: 2px 2px white;
   }
-  
+
   .note {
     color: #000000;
     text-shadow: 1.5px 1.5px white;
@@ -68,4 +93,121 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.Profile img {
+  border-radius: 50%;
+  width: 100px;
+  height: auto;
+  filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.15));
+  border: 3px solid #ffffff;
+  box-sizing: border-box;
+}
+
+.Profile p {
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.Profile hr {
+  width: 75%;
+  margin-bottom: 15px;
+  border: 1px solid #c9c9c9;
+}
+
+.Profile button {
+  width: 75%;
+  height: 60px;
+  border-radius: 60px;
+  color: #929292;
+  font-weight: 400;
+  font-size: 24px;
+  white-space: nowrap;
+  background: transparent;
+  border: 1px solid transparent;
+  outline: none;
+  margin-bottom: 5px;
+}
+
+.Profile button:hover {
+  color: white;
+  background-color: #ee4622;
+}
+
+.Profile button:focus {
+  color: white;
+  background-color: #ee4622;
+  outline: none;
+}
+
+.cat-btn {
+  float: right;
+  width: 25%;
+  height: 40px;
+  border-radius: 5px;
+  color: #929292;
+  font-size: 24px;
+  background: transparent;
+  border: 1px solid transparent;
+  outline: none;
+  margin-bottom: 5px;
+  background: rgba(233, 233, 233, 0.7);
+}
+
+.cat-btn:hover {
+  color: white;
+  background-color: #ee4622;
+}
+
+.cat-btn:focus {
+  color: white;
+  background-color: #ee4622;
+  outline: none;
+}
+
+.HomeTop {
+  background-color: #e6f2fd;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.ProfileBox {
+  background-color: #fdede6;
+  width: 95%;
+  padding: 20px;
+}
+
+.list-book {
+  width: 80%;
+  margin: auto;
+  display: block;
+}
+
+.list-book img {
+  width: 100%;
+  height: auto;
+}
+
+.list-book h4 {
+  font-family: Times New Roman;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 120.5%;
+}
+
+.list-book p {
+  color: #929292;
+}
+
+.list-title {
+  font-family: Times New Roman;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 35px;
+  line-height: 101.5%;
+  padding-left: 10px;
 }

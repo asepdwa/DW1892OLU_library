@@ -1,10 +1,16 @@
-import React from 'react';
-import icon from '../Assets/icon.png';
+import React, { useContext } from "react";
+import icon from "../Assets/icon.png";
 
-export default function Header(){
-    return (
-        <header className="App-header">
-        <p><img src={icon} alt="icon" /> Lib'rary</p>
-        </header>
-    );
+import { LoginContext } from "../Context/LoginContext";
+
+export default function Header() {
+  const [state] = useContext(LoginContext);
+
+  return (
+    <header className={state.isLogin ? "App-header" : "App-header-lp"}>
+      <p>
+        <img src={icon} alt="icon" /> Lib'rary
+      </p>
+    </header>
+  );
 }
