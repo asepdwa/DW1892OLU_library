@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./Assets/App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+import PrivateRoute from "./Component/PrivateRoute";
+import LoginContextProvider from "./Context/LoginContext";
+import LandingPage from "./Pages/LandingPage";
+import Home from "./Pages/Home";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LoginContextProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <PrivateRoute path="/Home" component={Home} />
+        </Switch>
+      </Router>
+    </LoginContextProvider>
   );
 }
-
-export default App;
