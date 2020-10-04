@@ -2,9 +2,13 @@ import React, { createContext, useReducer } from "react";
 import { UserDummy } from "../Component/FakeData";
 export const LoginContext = createContext();
 
+let userData_Saved = localStorage.getItem("loginData")
+  ? JSON.parse(localStorage.getItem("loginData"))
+  : {};
+
 const initialState = {
   userData: UserDummy,
-  loginData: {},
+  loginData: userData_Saved,
   isLogin: false || localStorage.getItem("isLogin"),
 };
 
@@ -21,7 +25,6 @@ const reducer = (state, action) => {
       };
 
     case "REGISTER":
-      localStorage.setItem("userData", JSON.stringify(action.userData));
       return {
         ...state,
         userData: [...state.userData, action.userData],

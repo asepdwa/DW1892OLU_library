@@ -16,7 +16,10 @@ export default function AddBook() {
 
   return (
     <div className="table-responsive">
-      <table className="table table-hovered table-striped table-sm">
+      <h4 className="list-title" style={{ padding: 0 }}>
+        Book Verification
+      </h4>
+      <table className="table table-hovered table-striped table-sm mt-4">
         <thead>
           <tr>
             <th>No</th>
@@ -40,19 +43,64 @@ export default function AddBook() {
                   {book.source.split("/")[book.source.split("/").length - 1]}
                 </Link>
               </td>
-              <td style={{ fontSize: 12, fontWeight: 700 }}>{book.status}</td>
-              <td>
-                <center>
-                  {book.status === "Approved" ? (
-                    <FcApproval size="30" />
-                  ) : (
-                    <>
-                      <button className="btn btn-danger">Cancel</button>{" "}
-                      <button className="btn btn-success">Approve</button>
-                    </>
-                  )}
-                </center>
-              </td>
+              {book.status === "Approved" ? (
+                <>
+                  <td
+                    className="text-success"
+                    style={{ fontSize: 12, fontWeight: 700 }}
+                  >
+                    {book.status}
+                  </td>
+                  <td>
+                    <center>
+                      <FcApproval size="30" />
+                    </center>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td
+                    className="text-danger"
+                    style={{ fontSize: 12, fontWeight: 700 }}
+                  >
+                    {book.status}
+                  </td>
+                  <td>
+                    <center>
+                      {book.status !== "Canceled" && (
+                        <button
+                          onClick={() =>
+                            dispatch({
+                              type: "VERIFICATION",
+                              bookLoad: {
+                                id: book.id,
+                                status: "Canceled",
+                              },
+                            })
+                          }
+                          className="btn btn-danger"
+                        >
+                          Cancel
+                        </button>
+                      )}{" "}
+                      <button
+                        onClick={() =>
+                          dispatch({
+                            type: "VERIFICATION",
+                            bookLoad: {
+                              id: book.id,
+                              status: "Approved",
+                            },
+                          })
+                        }
+                        className="btn btn-success"
+                      >
+                        Approve
+                      </button>
+                    </center>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>
