@@ -17,7 +17,7 @@ export default function App() {
         <Router>
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <PrivateRoute path="/Read" component={Read} />
+            <PrivateRoute path="/Read/:id" component={Read} />
             <PrivateRoute path="/Home" component={Home} />
           </Switch>
         </Router>

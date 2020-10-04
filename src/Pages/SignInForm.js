@@ -1,19 +1,14 @@
 import React, { useContext, useState } from "react";
 import { LoginContext } from "../Context/LoginContext";
 import { Button, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 
 export default function SignIn(props) {
-  const history = useHistory();
   const [state, dispatch] = useContext(LoginContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const { email, password } = formData;
-  let userData_Saved = localStorage.getItem("userData")
-    ? JSON.parse(localStorage.getItem("userData"))
-    : [];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,18 +20,13 @@ export default function SignIn(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      (email === userData_Saved.email &&
-        password === userData_Saved.password) ||
-      filterExistedUserData.length > 0
-    ) {
+    if (filterExistedUserData.length > 0) {
       dispatch({
         type: "LOGIN",
         loginData: filterExistedUserData[0],
       });
 
       alert("Login Berhasil");
-      history.push("/Home");
     } else {
       alert("Email atau password yang dimasukkan salah");
     }

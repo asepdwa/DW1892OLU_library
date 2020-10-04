@@ -101,7 +101,7 @@ export default function Detail() {
                 Add Library <FaRegBookmark />
               </button>
             )}
-            <Link to="/Read">
+            <Link to={`/Read/${book_data[0].id}`}>
               <button className="btn btn-light" style={{ height: 40 }}>
                 Read Book <FaBookOpen />
               </button>

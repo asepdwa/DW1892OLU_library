@@ -4,7 +4,7 @@ export const BookContext = createContext();
 
 const initialState = {
   bookData: BookLibrary,
-  libraryData: [1, 2, 3],
+  libraryData: [2, 3, 4],
 };
 
 const reducer = (state, action) => {
@@ -19,6 +19,18 @@ const reducer = (state, action) => {
       return {
         ...state,
         libraryData: [...state.libraryData, action.libraryLoad],
+      };
+    case "VERIFICATION":
+      return {
+        ...state,
+        bookData: state.bookData.map((book) =>
+          book.id === action.bookLoad.id
+            ? {
+                ...book,
+                status: action.bookLoad.status,
+              }
+            : book
+        ),
       };
     default:
       throw new Error();
