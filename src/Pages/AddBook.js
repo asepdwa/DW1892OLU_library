@@ -3,11 +3,9 @@ import { API } from "../Config/Api";
 import { useMutation } from "react-query";
 import { BiBookAdd } from "react-icons/bi";
 import { FaPaperclip, FaRegFileImage } from "react-icons/fa"
-import { useHistory } from "react-router-dom";
 import { LoginContext } from "../Context/LoginContext";
 
 export default function AddBook() {
-  const history = useHistory();
   const [state] = useContext(LoginContext);
 
   const [formData, setFormData] = useState({
@@ -32,12 +30,12 @@ export default function AddBook() {
 
   const [handleSubmit] = useMutation(async () => {
     if (
-      title.length > 4 &&
-      category.length > 4 &&
-      publication.length > 4 &&
+      title.length > 3 &&
+      category.length > 3 &&
+      publication.length > 3 &&
       pages.length > 0 &&
       aboutBook.length > 10 &&
-      isbn.length > 4
+      isbn.length > 3
     ) {
       try {
         const config = {
@@ -45,6 +43,7 @@ export default function AddBook() {
             "content-type": "multipart/form-data",
           },
         };
+
         let body = new FormData();
         body.append("title", title);
         body.append("publication", publication);
@@ -57,8 +56,8 @@ export default function AddBook() {
         body.append("file", file);
         body.append("status", state.userData.role === "Admin" ? "Approved" : "Waiting to be verified");
 
-        await API.post("/book", body, config);
-
+        const res = await API.post("/book", body, config);
+        alert(res.data.message);
         setFormData({
           title: "",
           publication: "",
@@ -67,12 +66,6 @@ export default function AddBook() {
           isbn: "",
           aboutBook: "",
         });
-        alert(
-          state.userData.role === "Admin"
-            ? "Thank you for adding your own books to our website"
-            : "Thank you for adding your own books to our website, please wait 1 x 24 hours to verifying by admin"
-        );
-        history.push("/Home/Profile");
       } catch (error) {
         alert(error.response.data.error.message)
       }
@@ -96,6 +89,7 @@ export default function AddBook() {
             type="text"
             name="title"
             placeholder="Title"
+            value={title}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -104,6 +98,7 @@ export default function AddBook() {
             className="form-control"
             type="text"
             name="publication"
+            value={publication}
             placeholder="Publication Date"
             onChange={(e) => handleChange(e)}
           />
@@ -113,6 +108,7 @@ export default function AddBook() {
             className="form-control"
             type="text"
             name="category"
+            value={category}
             placeholder="Category"
             onChange={(e) => handleChange(e)}
           />
@@ -122,6 +118,7 @@ export default function AddBook() {
             className="form-control"
             type="text"
             name="pages"
+            value={pages}
             placeholder="Pages"
             onChange={(e) => handleChange(e)}
           />
@@ -131,6 +128,7 @@ export default function AddBook() {
             className="form-control"
             type="text"
             name="isbn"
+            value={isbn}
             placeholder="ISBN"
             onChange={(e) => handleChange(e)}
           />
@@ -139,6 +137,7 @@ export default function AddBook() {
           <textarea
             className="form-control"
             name="aboutBook"
+            value={aboutBook}
             placeholder="About this book ..."
             rows="5"
             onChange={(e) => handleChange(e)}

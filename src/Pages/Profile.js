@@ -24,7 +24,6 @@ export default function Profile() {
     if (!avatar)
       return alert("Select an Image file to change");
 
-    let res;
     try {
       if (formUpload) {
         const config = {
@@ -64,7 +63,8 @@ export default function Profile() {
         });
       }
     } catch (err) {
-      alert(err.response.data.error.message)
+      console.log(err)
+      alert(err.response.data.error.message);
     }
   };
 

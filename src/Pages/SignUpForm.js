@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { API } from "../Config/Api"
 import { useMutation } from "react-query"
 import { Button, Form } from "react-bootstrap";
+
+import { API } from "../Config/Api"
 
 export default function SignUpForm(props) {
   // eslint-disable-next-line
@@ -45,6 +46,7 @@ export default function SignUpForm(props) {
             "content-type": "multipart/form-data",
           },
         };
+
         let body = new FormData();
         body.append("email", email);
         body.append("password", password);

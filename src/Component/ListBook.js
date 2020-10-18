@@ -1,24 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { API } from "../Config/Api";
+import { Modal } from "react-bootstrap"
 import { useQuery } from "react-query";
+
+import { API } from "../Config/Api";
 import { LoginContext } from "../Context/LoginContext";
 import LoadingScreen from "./LoadingScreen";
 
 export default function ListBook(props) {
-  const [state] = useContext(LoginContext);
+  const [state, dispatch] = useContext(LoginContext);
   const { loading, error, data: books, refetch } = useQuery(
     "getBooksData",
     async () => await API.get("/books")
   );
+  const [modalState, setModal] = useState({ show: false, message: "", alertType: "alert-success" });
 
   const handleDelete = async (id) => {
     try {
-      const res = await API.delete(`/book/${id}`)
+      const res = await API.delete(`/book/${id}`);
       refetch();
-      alert(res.data.message);
+      try {
+        const resAuth = await API.get("/auth");
+
+        dispatch({
+          type: "LOAD_USER",
+          payload: resAuth.data.data,
+        });
+
+      } catch (error) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+      }
+
+      setModal({ show: true, message: res.data.message, alertType: "alert-success" });
     } catch (error) {
-      console.log(error.message);
+      setModal({ show: true, message: error.response.message, alertType: "alert-danger" });
     }
   };
 
@@ -52,11 +69,13 @@ export default function ListBook(props) {
               {props.myBook && <button onClick={() => handleDelete(book.id)} className="btn" style={{
                 position: "absolute",
                 top: 5,
-                left: "77%",
+                left: "73%",
                 backgroundColor: "#555",
                 color: "white",
-                fontSize: 15,
+                fontSize: 16,
+                fontWeight: 600,
                 padding: 2,
+                width: 25,
                 borderRadius: "100%",
                 display: "block",
                 zIndex: 10,
@@ -76,6 +95,20 @@ export default function ListBook(props) {
                   : "Book is not found"}</h4>
         </div>)
         }
+        <Modal
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={modalState.show}
+          onHide={() => setModal({ ...modalState, show: false })}
+        >
+          <div
+            className={`alert ${modalState.alertType}`}
+            style={{ margin: 10, textAlign: "center" }}
+          >
+            {modalState.message}
+          </div>
+        </Modal>
       </div >
     );
   }

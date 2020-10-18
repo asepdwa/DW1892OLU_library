@@ -9,8 +9,7 @@ import LoadingScreen from "./LoadingScreen";
 
 export default function Detail() {
   const [state, dispatch] = useContext(LoginContext);
-  const [addLibrary, setAddLibrary] = useState(false);
-  const [removeLibrary, setRemoveLibrary] = useState(false);
+  const [modalState, setModal] = useState({ show: false, message: "", alertType: "alert-success" });
 
   const history = useHistory();
   const { id } = useParams();
@@ -32,7 +31,7 @@ export default function Detail() {
       };
 
       const body = JSON.stringify({ UserId: state.userData.id, BookId: parseInt(id) });
-      await API.post("/bookmark", body, config);
+      const res = await API.post("/bookmark", body, config);
 
       try {
         const resAuth = await API.get("/auth");
@@ -47,10 +46,9 @@ export default function Detail() {
           type: "AUTH_ERROR",
         });
       }
-
-      setAddLibrary(true);
+      setModal({ show: true, message: res.data.message, alertType: "alert-success" })
     } catch (err) {
-      console.log(err);
+      setModal({ show: true, message: err.response.data.message, alertType: "alert-danger" })
     }
   };
 
@@ -72,9 +70,9 @@ export default function Detail() {
         });
       }
 
-      setRemoveLibrary(true);
+      setModal({ show: true, message: res.data.message, alertType: "alert-warning" })
     } catch (err) {
-      console.log(err);
+      setModal({ show: true, message: err.response.data.message, alertType: "alert-danger" })
     }
   };
 
@@ -101,7 +99,7 @@ export default function Detail() {
               />
             </div>
             <div className="col-sm-7">
-              <h3
+              <h3 contenteditable="true"
                 style={{
                   fontSize: 50,
                   fontFamily: "Times New Roman",
@@ -109,7 +107,9 @@ export default function Detail() {
                 }}
               >
                 {book.data.data.title}
+                {" "}
               </h3>
+
               <p className="detail-data" style={{ fontSize: 18 }}>
                 {book.data.data.author.fullName}
               </p>
@@ -175,30 +175,17 @@ export default function Detail() {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                show={addLibrary}
-                onHide={() => setAddLibrary(false)}
+                show={modalState.show}
+                onHide={() => setModal({ ...modalState, show: false })}
               >
                 <div
-                  className="alert alert-success"
+                  className={`alert ${modalState.alertType}`}
                   style={{ margin: 10, textAlign: "center" }}
                 >
-                  This book has been added to your library
-              </div>
+                  {modalState.message}
+                </div>
               </Modal>
-              <Modal
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                show={removeLibrary}
-                onHide={() => setRemoveLibrary(false)}
-              >
-                <div
-                  className="alert alert-warning"
-                  style={{ margin: 10, textAlign: "center" }}
-                >
-                  This book has been removed from your library
-              </div>
-              </Modal>
+
             </div>
           </div>
         </div>

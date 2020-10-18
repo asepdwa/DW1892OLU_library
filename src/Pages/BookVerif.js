@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FcApproval } from "react-icons/fc";
 import { FaTrashAlt } from "react-icons/fa"
 import { useQuery, useMutation } from "react-query";
+import { Modal } from "react-bootstrap";
+
 import { API } from "../Config/Api";
 import LoadingScreen from "../Component/LoadingScreen";
 
@@ -11,6 +13,8 @@ export default function BookVerif() {
     "getBooksData",
     async () => await API.get("/books")
   );
+
+  const [modalState, setModal] = useState({ show: false, message: "", alertType: "alert-success" });
 
   const [handleApprove] = useMutation(async (id) => {
     try {
@@ -23,9 +27,9 @@ export default function BookVerif() {
       const body = JSON.stringify({ status: "Approved" })
       const res = await API.patch(`/book/${id}`, body, config)
       refetch();
-      alert(res.data.message);
+      setModal({ show: true, message: res.data.message, alertType: "alert-success" })
     } catch (error) {
-      console.log(error.message);
+      setModal({ show: true, message: error.response.data.message, alertType: "alert-danger" })
     }
   });
 
@@ -40,9 +44,9 @@ export default function BookVerif() {
       const body = JSON.stringify({ status: "Canceled" })
       const res = await API.patch(`/book/${id}`, body, config)
       refetch();
-      alert(res.data.message);
+      setModal({ show: true, message: res.data.message, alertType: "alert-success" })
     } catch (error) {
-      console.log(error.message);
+      setModal({ show: true, message: error.response.data.message, alertType: "alert-danger" })
     }
   });
 
@@ -50,9 +54,9 @@ export default function BookVerif() {
     try {
       const res = await API.delete(`/book/${id}`)
       refetch();
-      alert(res.data.message);
+      setModal({ show: true, message: res.data.message, alertType: "alert-success" })
     } catch (error) {
-      console.log(error.message);
+      setModal({ show: true, message: error.response.data.message, alertType: "alert-danger" })
     }
   });
 
@@ -92,7 +96,7 @@ export default function BookVerif() {
                 <td>{book.isbn}</td>
                 <td style={{ fontSize: 12, fontWeight: 700 }}>
                   <Link to={`/Read/${book.id}`}>
-                    {book.fileUrl.split("/")[book.fileUrl.split("/").length - 1]}
+                    {book.fileUrl.split("/")[book.fileUrl.split("/").length - 1].substring(0, 40)}
                   </Link>
                 </td>
                 {book.status === "Approved" ? (
@@ -155,6 +159,20 @@ export default function BookVerif() {
             ))}
           </tbody>
         </table>
+        <Modal
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={modalState.show}
+          onHide={() => setModal({ ...modalState, show: false })}
+        >
+          <div
+            className={`alert ${modalState.alertType}`}
+            style={{ margin: 10, textAlign: "center" }}
+          >
+            {modalState.message}
+          </div>
+        </Modal>
       </div>
     );
   }
