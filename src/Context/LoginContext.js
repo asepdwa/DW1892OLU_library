@@ -1,42 +1,52 @@
 import React, { createContext, useReducer } from "react";
-import { UserDummy } from "../Component/FakeData";
 export const LoginContext = createContext();
-
-let userData_Saved = localStorage.getItem("loginData")
-  ? JSON.parse(localStorage.getItem("loginData"))
-  : {};
-
 const initialState = {
-  userData: UserDummy,
-  loginData: userData_Saved,
-  isLogin: false || localStorage.getItem("isLogin"),
+  isLogin: false,
+  userData: null,
+  loading: false,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN":
-      localStorage.setItem("isLogin", true);
-      localStorage.setItem("loginData", JSON.stringify(action.loginData));
-
+    case "LOGIN_SUCCESS":
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         isLogin: true,
-        loginData: action.loginData,
+        loading: true,
       };
-
-    case "REGISTER":
-      return {
-        ...state,
-        userData: [...state.userData, action.userData],
-      };
-    case "LOGOUT":
-      localStorage.removeItem("isLogin");
-      localStorage.removeItem("loginData");
-
+    case "LOGIN_FAILED":
       return {
         ...state,
         isLogin: false,
-        loginData: [],
+        userData: null,
+        loading: false,
+      };
+    case "AUTH_ERROR":
+      return {
+        ...state,
+        isLogin: false,
+        userData: null,
+      }
+    case "LOAD_USER":
+      return {
+        ...state,
+        isLogin: true,
+        userData: action.payload,
+        loading: false,
+      };
+    case "REGISTER":
+      return {
+        ...state,
+      };
+    case "LOGOUT":
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        isLogin: false,
+        userData: null,
+        loading: false,
+        isLoading: true,
       };
     default:
       throw new Error();

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { LoginContext } from "../Context/LoginContext";
 import { Button, Form } from "react-bootstrap";
+import { API, setAuthToken } from "../Config/Api";
 
 export default function SignIn(props) {
   const [state, dispatch] = useContext(LoginContext);
@@ -14,21 +15,45 @@ export default function SignIn(props) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const filterExistedUserData = state.userData.filter(
-    (userData) => userData.email === email && userData.password === password
-  );
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (filterExistedUserData.length > 0) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify({ email, password });
+
+    try {
+      const res = await API.post("/signin", body, config);
+
       dispatch({
-        type: "LOGIN",
-        loginData: filterExistedUserData[0],
+        type: "LOGIN_SUCCESS",
+        payload: res.data.data,
       });
 
-      alert("Login Berhasil");
-    } else {
-      alert("Email atau password yang dimasukkan salah");
+      setAuthToken(res.data.data.token);
+      alert(res.data.message);
+      try {
+        const resAuth = await API.get("/auth");
+
+        dispatch({
+          type: "LOAD_USER",
+          payload: resAuth.data.data,
+        });
+
+      } catch (error) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+      }
+
+    } catch (err) {
+      alert(err.response.data.error.message)
+      dispatch({
+        type: "LOGIN_FAILED",
+      });
     }
   };
 

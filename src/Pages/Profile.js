@@ -1,17 +1,72 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { FaRegFileImage } from "react-icons/fa"
+import { Modal } from "react-bootstrap";
 import { MdEmail } from "react-icons/md";
-import { FaTransgender, FaPhoneAlt } from "react-icons/fa";
+import { FaTransgender, FaPhoneAlt, FaLink } from "react-icons/fa";
 import { ImLocation } from "react-icons/im";
-
-import { BookContext } from "../Context/BookContext";
+import { API } from "../Config/Api";
+import { LoginContext } from "../Context/LoginContext";
+import ListBook from "../Component/ListBook";
 
 export default function Profile() {
-  let userData_Saved = localStorage.getItem("loginData")
-    ? JSON.parse(localStorage.getItem("loginData"))
-    : [];
+  const [state, dispatch] = useContext(LoginContext);
+  const [avatarModal, setAvatarModal] = useState(false);
+  const [avatar, setAvatar] = useState(null);
+  const [formUpload, setFormUpload] = useState(true);
 
-  const [state] = useContext(BookContext);
+  const handleChange = (e) => {
+    e.target.type === "file"
+      ? setAvatar(e.target.files[0])
+      : setAvatar(e.target.value);
+  };
+
+  const changeAvatar = async () => {
+    if (!avatar)
+      return alert("Select an Image file to change");
+
+    let res;
+    try {
+      if (formUpload) {
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+
+        let body = new FormData();
+        body.append("avatar", avatar);
+
+        const res = await API.patch(`/user/avatar/${state.userData.id}`, body, config);
+        alert(res.data.message);
+      } else {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        const body = JSON.stringify({ photoUrl: avatar });
+        const res = await API.patch(`/user/${state.userData.id}`, body, config);
+        alert(res.data.message);
+      }
+
+      try {
+        const resAuth = await API.get("/auth");
+
+        dispatch({
+          type: "LOAD_USER",
+          payload: resAuth.data.data,
+        });
+
+      } catch (error) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+      }
+    } catch (err) {
+      alert(err.response.data.error.message)
+    }
+  };
 
   return (
     <>
@@ -21,7 +76,7 @@ export default function Profile() {
             <div className="Profilee">
               <MdEmail size="30" fill="#8A8C90" style={{ marginTop: 10 }} />
               <div className="ProfileRow">
-                <p className="profile-data">{userData_Saved.email}</p>
+                <p className="profile-data">{state.userData.email}</p>
                 <p className="profile-note">E-mail</p>
               </div>
             </div>
@@ -32,29 +87,29 @@ export default function Profile() {
                 style={{ marginTop: 10 }}
               />
               <div className="ProfileRow">
-                <p className="profile-data">{userData_Saved.gender}</p>
+                <p className="profile-data">{state.userData.gender}</p>
                 <p className="profile-note">Gender</p>
               </div>
             </div>
             <div className="Profilee">
               <FaPhoneAlt size="30" fill="#8A8C90" style={{ marginTop: 10 }} />
               <div className="ProfileRow">
-                <p className="profile-data">{userData_Saved.phone}</p>
+                <p className="profile-data">{state.userData.phone}</p>
                 <p className="profile-note">Phone</p>
               </div>
             </div>
             <div className="Profilee">
               <ImLocation size="30" fill="#8A8C90" style={{ marginTop: 10 }} />
               <div className="ProfileRow">
-                <p className="profile-data">{userData_Saved.address}</p>
+                <p className="profile-data">{state.userData.address}</p>
                 <p className="profile-note">Address</p>
               </div>
             </div>
           </div>
           <div className="col-sm-4">
             <img
-              src={userData_Saved.image}
-              alt="icon"
+              src={state.userData.photoUrl}
+              alt={state.userData.fullName}
               style={{
                 width: "60%",
                 height: "auto",
@@ -62,32 +117,76 @@ export default function Profile() {
                 display: "block",
               }}
             />
-            <button className="btn-custom">Change Photo Profile</button>
+            <button className="btn-custom" onClick={() => setAvatarModal(true)}>Change Photo Profile</button>
+            <Modal
+              size="md"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={avatarModal}
+              onHide={() => setAvatarModal(false)}
+            >
+              <Modal.Body>
+                <div className="row">
+                  <div className="col-sm-8">
+                    <div className="row">
+                      <div className="col-9">
+                        <div className="form-group">
+                          {formUpload ? <><input
+                            type="file"
+                            className="form-control-file"
+                            name="avatar"
+                            id="avatar"
+                            accept="image/*"
+                            onChange={(e) => handleChange(e)}
+                            style={{ display: "none" }}
+                          />
+                            <label for="avatar" className="btn btn-danger btn-block" style={{ background: "#EE4622" }}>
+                              Attache Photo Profile
+                        </label></> :
+                            <input
+                              className="form-control"
+                              type="text"
+                              name="avatar"
+                              id="avatar"
+                              placeholder="Enter photo profile URL"
+                              onChange={(e) => handleChange(e)}
+                            />}
+                        </div>
+                      </div>
+                      <div className="col-2" style={{ marginRight: 20 }}>
+                        <button className="btn btn-danger" onClick={(e) => {
+                          e.preventDefault();
+                          setAvatar(null);
+                          setFormUpload(formUpload ? false : true);
+                        }} style={{ background: "#EE4622" }}>
+                          {formUpload ? <FaLink size="22" /> :
+                            <FaRegFileImage size="22" />}</button>
+                      </div>
+                    </div>
+                    <button className="btn btn-danger btn-block mt-1 mb-4" onClick={() =>
+                      changeAvatar()} style={{ background: "#EE4622" }}>
+                      Change Photo Profile
+                        </button>
+                  </div>
+                  <div className="col-sm-4">
+                    <img
+                      src={avatar ? formUpload ? URL.createObjectURL(avatar) : avatar : state.userData.photoUrl}
+                      alt="Enter Valid Url"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        float: "right",
+                      }}
+                    />
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
           </div>
         </div>
       </div>
       <h4 className="list-title mt-4">My Book</h4>
-      <div className="row mt-4">
-        {state.bookData
-          .filter((book) => book.user === userData_Saved.name)
-          .map((book, index) => (
-            <div className="col-sm-3">
-              {book.status !== "Approved" && (
-                <div className="need-confirm">
-                  <p>{book.status}</p>
-                </div>
-              )}
-              <div className="list-book">
-                <Link to={`/Home/Detail/${book.id}`}>
-                  <img src={book.image} alt={book.title} />
-                </Link>
-                <br />
-                <h4 className="mt-4">{book.title}</h4>
-                <p>{book.user}</p>
-              </div>
-            </div>
-          ))}
-      </div>
+      <ListBook myBook={true} />
     </>
   );
 }

@@ -21,7 +21,7 @@
 .quote {
   font-family: Times New Roman;
   font-weight: bold;
-  font-size: 80px;
+  font-size: 82px;
   line-height: 82.49%;
   color: white;
   text-shadow: 2px 2px black;
@@ -31,7 +31,7 @@
   color: white;
   font-size: 20px;
   margin-top: 30px;
-  line-height: 85%;
+  line-height: 32px;
   text-shadow: 1.5px 1.5px black;
 }
 
@@ -75,22 +75,6 @@
   color: black;
 }
 
-@media screen and (min-width: 768px) {
-  .App-header-lp p {
-    color: black;
-  }
-
-  .quote {
-    color: #000000;
-    text-shadow: 2px 2px white;
-  }
-
-  .note {
-    color: #000000;
-    text-shadow: 1.5px 1.5px white;
-  }
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -113,12 +97,16 @@
   margin-bottom: 0;
 }
 
-.Profile i {
+.Profile .role {
   font-family: Helvetica;
-  font-weight: 600;
+  font-style: italic;
+  font-weight: 550;
   font-size: 15px;
-  margin-top: 20px;
-  color: #929292;
+  color: white;
+  background-color: #ee4622;
+  height: 20px;
+  width: 100px;
+  border-radius: 5px;
 }
 
 .Profile hr {
@@ -191,6 +179,7 @@
 .list-book img {
   width: 100%;
   height: auto;
+  border-radius: 10px;
 }
 
 .list-book h4 {
@@ -212,6 +201,26 @@
   font-size: 35px;
   line-height: 101.5%;
   padding-left: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .App-header-lp p {
+    color: black;
+  }
+
+  .quote {
+    color: #000000;
+    text-shadow: 2px 2px white;
+  }
+
+  .note {
+    color: #000000;
+    text-shadow: 1.5px 1.5px white;
+  }
+
+  .list-book img {
+    height: 220px;
+  }
 }
 
 .ProfileRow {

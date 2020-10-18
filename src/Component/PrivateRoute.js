@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { LoginContext } from "../Context/LoginContext";
+import LoadingScreen from "./LoadingScreen";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const [state] = useContext(LoginContext);
@@ -9,7 +10,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        state.isLogin ? <Component {...props} /> : <Redirect to="/" />
+        state.loading ? (
+          <LoadingScreen />
+        ) : state.isLogin ? !state.userData ? <LoadingScreen /> : (
+          <Component {...props} />
+        ) : (
+              <Redirect to="/" />
+            )
       }
     />
   );
