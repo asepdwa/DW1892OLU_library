@@ -1,12 +1,7 @@
-import React, { useContext } from "react";
-
+import React from "react";
 import ListBook from "../Component/ListBook";
-import { BookContext } from "../Context/BookContext";
 
 export default function MyLibrary() {
-  // eslint-disable-next-line
-  const [state] = useContext(BookContext);
-
   return (
     <>
       <div className="row">

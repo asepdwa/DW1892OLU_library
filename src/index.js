@@ -4,10 +4,13 @@ import "./Assets/index.css";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as serviceWorker from "./serviceWorker";
+import LoginContextProvider from "./Context/LoginContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LoginContextProvider>
+      <App />
+    </LoginContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

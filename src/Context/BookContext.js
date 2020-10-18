@@ -1,37 +1,42 @@
 import React, { createContext, useReducer } from "react";
-import { BookLibrary } from "../Component/FakeData";
 export const BookContext = createContext();
 
 const initialState = {
-  bookData: BookLibrary,
-  libraryData: [2, 3, 4],
+  bookData: [],
+  categoryData: [],
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "ADD_BOOK":
-      console.log(action.bookLoad);
+    case "LOAD_BOOK":
       return {
         ...state,
         bookData: [...state.bookData, action.bookLoad],
+        categoryData: [...state.bookData, action.categoryLoad],
       };
-    case "ADD_LIBRARY":
-      return {
-        ...state,
-        libraryData: [...state.libraryData, action.libraryLoad],
-      };
-    case "VERIFICATION":
-      return {
-        ...state,
-        bookData: state.bookData.map((book) =>
-          book.id === action.bookLoad.id
-            ? {
-                ...book,
-                status: action.bookLoad.status,
-              }
-            : book
-        ),
-      };
+    // case "ADD_BOOK":
+    //   console.log(action.bookLoad);
+    //   return {
+    //     ...state,
+    //     bookData: [...state.bookData, action.bookLoad],
+    //   };
+    // case "ADD_LIBRARY":
+    //   return {
+    //     ...state,
+    //     libraryData: [...state.libraryData, action.libraryLoad],
+    //   };
+    // case "VERIFICATION":
+    //   return {
+    //     ...state,
+    //     bookData: state.bookData.map((book) =>
+    //       book.id === action.bookLoad.id
+    //         ? {
+    //           ...book,
+    //           status: action.bookLoad.status,
+    //         }
+    //         : book
+    //     ),
+    //   };
     default:
       throw new Error();
   }

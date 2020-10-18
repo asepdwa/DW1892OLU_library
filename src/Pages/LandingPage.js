@@ -1,18 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import Header from "../Component/Header";
-import LpButton from "../Component/LpButton";
-
-import { useHistory } from "react-router-dom";
-import { LoginContext } from "../Context/LoginContext";
+import LandingPageButton from "../Component/LandingPageButton";
 
 export default function LandingPage() {
-  const history = useHistory();
-  const [state] = useContext(LoginContext);
-
-  if (state.isLogin) {
-    history.push("/Home");
-  }
 
   const containerStyle = {
     marginLeft: 40,
@@ -31,11 +22,14 @@ export default function LandingPage() {
           anywhere
         </p>
         <p className="note">
-          Sign-up today and receive unlimited accesss to <br />
-          all of your reading - share your book.
+          Sign-up today and receive unlimited
+          <br />
+          accesss to all of your reading - shared
+          <br />
+          your book.
         </p>
         <br />
-        <LpButton />
+        <LandingPageButton />
       </div>
     </div>
   );
