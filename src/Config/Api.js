@@ -1,8 +1,6 @@
 import axios from "axios";
 
-export const baseURL = "http://localhost:5000/api/v1";
-export const ebookFolder = "http://localhost:5000/ebook/";
-export const thumbnailFolder = "http://localhost:5000/thumbnail/";
+export const baseURL = "https://dw-library.herokuapp.com/api/v1";
 export const API = axios.create({
   baseURL,
 });
