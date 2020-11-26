@@ -1,0 +1,45 @@
+.list-book {
+  width: 80%;
+  margin: auto;
+  display: block;
+}
+
+.list-book img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.list-book h4 {
+  font-family: Times New Roman;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 120.5%;
+}
+
+.list-book p {
+  color: #929292;
+}
+
+.need-confirm {
+  width: 85%;
+  height: 98%;
+  position: absolute;
+  background: rgba(196, 196, 196, 0.7);
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  z-index: 9;
+}
+
+.need-confirm p {
+  margin-top: 50%;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  color: #ffd600;
+  background-color: white;
+  text-shadow: 0.5px 0.5px black;
+}
