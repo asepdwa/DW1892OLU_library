@@ -3,15 +3,16 @@ import { useHistory } from "react-router-dom";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { useMutation } from "react-query";
 
-import { LoginContext } from "../Context/Login";
-import { API, setAuthToken } from "../Config/Api";
-import { CustomInput, CustomInputPassword } from "../Component/CustomForm";
-import LoadingScreen from "../Component/LoadingScreen";
+import { LoginContext } from "../../Context/Login";
+import { API, setAuthToken } from "../../Config/Api";
+import { CustomInput, CustomInputPassword } from "../../Component/CustomForm";
+import LoadingScreen from "../../Component/LoadingScreen";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 export default function SignIn(props) {
+  const { nextModal } = props;
   // eslint-disable-next-line
   const [state, dispatch] = useContext(LoginContext);
   const [message, setMessage] = useState({
@@ -141,7 +142,7 @@ export default function SignIn(props) {
       )}
 
       <p className="modalFooter">
-        Don't have an account ? <b onClick={props.Modal}>Click Here</b>
+        Don't have an account ? <b onClick={() => nextModal()}>Click Here</b>
       </p>
     </form>
   );

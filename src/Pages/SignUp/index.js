@@ -3,20 +3,21 @@ import { useHistory } from "react-router-dom";
 import { useMutation } from "react-query";
 import { FaExclamationTriangle } from "react-icons/fa";
 
-import { API, setAuthToken } from "../Config/Api";
-import { LoginContext } from "../Context/Login";
+import { API, setAuthToken } from "../../Config/Api";
+import { LoginContext } from "../../Context/Login";
 
 import {
   CustomInput,
   CustomInputPassword,
   CustomSelect,
-} from "../Component/CustomForm";
-import LoadingScreen from "../Component/LoadingScreen";
+} from "../../Component/CustomForm";
+import LoadingScreen from "../../Component/LoadingScreen";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 export default function SignUpForm(props) {
+  const { nextModal } = props;
   const history = useHistory();
 
   // eslint-disable-next-line
@@ -179,7 +180,7 @@ export default function SignUpForm(props) {
         </button>
       )}
       <p className="modalFooter">
-        Already have an account ? <b onClick={props.Modal}>Click Here</b>
+        Already have an account ? <b onClick={() => nextModal()}>Click Here</b>
       </p>
     </form>
   );

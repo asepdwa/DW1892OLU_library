@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../../Component/Header";
 import ModalButton from "../../Component/Modal/ModalButton";
 
-import SignInForm from "../SignInForm";
-import SignUpForm from "../SignUpForm";
+import SignIn from "../SignIn";
+import SignUp from "../SignUp";
 
 import { LoginContext } from "../../Context/Login";
 
@@ -15,10 +15,15 @@ export default function LandingPage() {
   const [modalSignIn, setModalSignIn] = useState(false);
   const [modalSignUp, setModalSignUp] = useState(false);
 
-  useEffect(() => {
-    if (modalSignIn) setModalSignUp(false);
-    else if (modalSignUp) setModalSignIn(false);
-  }, [modalSignIn, modalSignUp]);
+  const handleNextModal = () => {
+    if (modalSignIn) {
+      setModalSignIn(false);
+      setModalSignUp(true);
+    } else {
+      setModalSignUp(false);
+      setModalSignIn(true);
+    }
+  };
 
   return (
     <div className="App">
@@ -51,7 +56,7 @@ export default function LandingPage() {
             <>
               <ModalButton
                 title="SignUp"
-                component={SignUpForm}
+                component={SignUp}
                 modalSize="md"
                 modalState={modalSignUp}
                 setModal={setModalSignUp}
@@ -61,16 +66,19 @@ export default function LandingPage() {
                   marginRight: 10,
                   background: "#EE4622",
                 }}
-              />
+              >
+                <SignUp nextModal={handleNextModal} />
+              </ModalButton>
               <ModalButton
                 title="SignIn"
-                component={SignInForm}
                 modalSize="sm"
                 modalState={modalSignIn}
                 setModal={setModalSignIn}
                 btnClassName="btn btn-light"
                 btnStyle={{ width: 200, marginRight: 10 }}
-              />
+              >
+                <SignIn nextModal={handleNextModal} />
+              </ModalButton>
             </>
           )}
         </div>

@@ -3,7 +3,6 @@ import { Modal } from "react-bootstrap";
 
 export default function ModalButton(props) {
   const {
-    component: Component,
     title,
     modalState,
     setModal,
@@ -11,7 +10,7 @@ export default function ModalButton(props) {
     btnStyle,
     modalSize,
     modalAria,
-    ...componentProps
+    children,
   } = props;
 
   return (
@@ -30,9 +29,7 @@ export default function ModalButton(props) {
         show={modalState}
         onHide={() => setModal(false)}
       >
-        <Modal.Body>
-          <Component {...componentProps} />
-        </Modal.Body>
+        <Modal.Body>{children}</Modal.Body>
       </Modal>
     </>
   );
