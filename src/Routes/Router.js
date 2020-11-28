@@ -11,6 +11,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import PrivateRoute from "./PrivateRoute";
 import Detail from "../Pages/Detail";
+import Read from "../Pages/Read";
 import LandingPage from "../Pages/LandingPage";
 import Home from "../Pages/Home";
 import Profile from "../Pages/Profile";
@@ -19,7 +20,7 @@ import AddBook from "../Pages/AddBook";
 import MyLibrary from "../Pages/MyLibrary";
 import Header from "../Component/Header";
 import Sidebar from "../Component/Sidebar";
-// import NotFound from "../Pages/NotFound";
+import NotFound from "../Pages/NotFound";
 
 const routerFadeAnimated = withRouter(({ location }) => (
   <div className="container-fluid mt-4">
@@ -73,7 +74,8 @@ export default function AppRouter() {
         >
           {routerFadeAnimated}
         </PrivateRoute>
-        {/* <Route component={NotFound} /> */}
+        <PrivateRoute path="/read/:id" component={Read} />
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );

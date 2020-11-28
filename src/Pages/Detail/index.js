@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Modal } from "react-bootstrap";
-import { API } from "../../Config/Api";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { FaRegBookmark, FaBookOpen, FaTrashAlt } from "react-icons/fa";
-import { useParams, useHistory, Link } from "react-router-dom";
+
+import { API } from "../../Config/Api";
 import { LoginContext } from "../../Context/Login";
+
+import ModalAlert from "../../Component/Modal/ModalAlert";
 import LoadingScreen from "../../Component/LoadingScreen";
 
 export default function Detail() {
@@ -19,7 +21,7 @@ export default function Detail() {
   const { id } = useParams();
 
   const { loading, error, data: book } = useQuery(
-    "getBookDetail",
+    `getBookDetail?id=${id}`,
     async () => await API.get(`/book/${id}`)
   );
 
@@ -34,9 +36,9 @@ export default function Detail() {
       };
 
       const body = JSON.stringify({
-        UserId: state.userData.id,
         BookId: parseInt(id),
       });
+
       const res = await API.post("/bookmark", body, config);
 
       try {
@@ -67,9 +69,7 @@ export default function Detail() {
 
   const removeFromMyLibrary = async () => {
     try {
-      const res = await API.delete(
-        `/bookmark/${state.userData.id}/${parseInt(id)}`
-      );
+      const res = await API.delete(`/bookmark/${parseInt(id)}`);
 
       try {
         const resAuth = await API.get("/auth");
@@ -134,7 +134,9 @@ export default function Detail() {
               {book.data.data.author.fullName}
             </p>
             <p className="detail-type">Publication Date</p>
-            <p className="detail-data">{book.data.data.publication}</p>
+            <p className="detail-data">
+              {book.data.data.publication.substring(0, 10)}
+            </p>
             <p className="detail-type">Category</p>
             <p className="detail-data">{book.data.data.category.name}</p>
             <p className="detail-type">Pages</p>
@@ -195,20 +197,7 @@ export default function Detail() {
                 Read Book <FaBookOpen />
               </button>
             </Link>
-            <Modal
-              size="lg"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              show={modalState.show}
-              onHide={() => setModal({ ...modalState, show: false })}
-            >
-              <div
-                className={`alert ${modalState.alertType}`}
-                style={{ margin: 10, textAlign: "center" }}
-              >
-                {modalState.message}
-              </div>
-            </Modal>
+            <ModalAlert modal={modalState} setModal={setModal} />
           </div>
         </div>
       </div>

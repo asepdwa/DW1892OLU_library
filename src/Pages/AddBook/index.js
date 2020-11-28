@@ -296,10 +296,10 @@ export default function AddBook() {
               <ImageCropper
                 getBlob={getBlob}
                 inputImg={cover.image}
-                aspect={7 / 11}
+                aspect={5 / 8}
                 shape="rect"
-                size={{ width: 267, height: 356 }}
-                resize={{ width: 350, height: 525 }}
+                size={{ width: 250, height: 400 }}
+                resize={{ width: 350, height: 560 }}
               />
               <br />
             </center>

@@ -13,7 +13,7 @@ export default function Book(props) {
         </div>
       )}
       <div className="list-book">
-        <Link to={`/Home/Detail/${data.id}`}>
+        <Link to={`/Detail/${data.id}`}>
           <img src={data.thumbnailUrl} alt={data.title} />
         </Link>
         {profile && (

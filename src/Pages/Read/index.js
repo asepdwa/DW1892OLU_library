@@ -4,7 +4,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import { API } from "../../Config/Api";
 import LoadingScreen from "../../Component/LoadingScreen";
-import icon from "../Assets/icon.png";
+import icon from "../../Assets/icon.svg";
 
 export default function Read() {
   const { id } = useParams();

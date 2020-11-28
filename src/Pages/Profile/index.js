@@ -7,11 +7,18 @@ import { ImLocation } from "react-icons/im";
 
 import { API } from "../../Config/Api";
 import { LoginContext } from "../../Context/Login";
+
+import ModalAlert from "../../Component/Modal/ModalAlert";
 import Books from "../../Component/Books";
 import ImageCropper from "../../Component/Cropper";
 
 export default function Profile() {
   const [state, dispatch] = useContext(LoginContext);
+  const [modalAlert, setModalAlert] = useState({
+    show: false,
+    alertType: "alert-success",
+    message: null,
+  });
   const [avatar, setAvatar] = useState({
     file: null,
     blob: null,
@@ -62,8 +69,14 @@ export default function Profile() {
       let body = new FormData();
       body.append("avatar", avatar.blob);
 
+      setAvatar({ ...avatar, modal: false });
+      setModalAlert({
+        show: true,
+        message: "Uploading ....",
+        alertType: "alert-warning",
+      });
+
       const res = await API.patch(`/avatar`, body, config);
-      alert(res.data.message);
 
       try {
         const resAuth = await API.get("/auth");
@@ -77,9 +90,18 @@ export default function Profile() {
           type: "AUTH_ERROR",
         });
       }
+      setModalAlert({
+        show: true,
+        message: res.data.message,
+        alertType: "alert-success",
+      });
     } catch (err) {
       console.log(err);
-      alert(err.response.data.error.message);
+      setModalAlert({
+        show: true,
+        message: err.response.data.error.message,
+        alertType: "alert-danger",
+      });
     }
   };
 
@@ -260,6 +282,7 @@ export default function Profile() {
           </div>
         </Modal.Body>
       </Modal>
+      <ModalAlert modal={modalAlert} setModal={setModalAlert} />
     </>
   );
 }
