@@ -3,7 +3,7 @@
 
 ## Installation
 #### `Step 1` - Clone it!
-	$ git clone https://github.com/asepkh/DW1892OLU_library
+	$ git clone https://github.com/asepkh/DW1892OLU_library/tree/production
    
 #### `Step 2` - Go into the project directory and install dependencies
 	$ yarn install
@@ -26,6 +26,6 @@ Open `http://localhost:3000` in browser!
 
 > This project was bootstrapped with Create React App.
 
-Restful API Lib'rary with NodeJS Repository [Click Here](https://github.com/asepkh/DW1892OLU_library_api)
+Restful API Lib'rary with NodeJS Repository [Click Here](https://github.com/asepkh/DW1892OLU_library_api/tree/production)
 
 ![alt text](https://file.mejik.id/microgen-lms1586588410220/project/159f8qAsep%20Khairul%20Anam-2.jpg)
