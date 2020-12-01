@@ -3,14 +3,14 @@
 
 ## Installation
 #### `Step 1` - Clone it!
-	$ git clone https://github.com/asepkh/DW1892OLU_literature
+	$ git clone https://github.com/asepkh/DW1892OLU_library
    
 #### `Step 2` - Go into the project directory and install dependencies
 	$ yarn install
 
 #### `Step 3` - API url configuration
 	open "./Config/API.js"
-	change variable -> baseURL = "https://literatures.herokuapp.com/api/v1";
+	change variable -> baseURL = "https://dw-library.herokuapp.com/api/v1";
   
 #### `Step 4` - Run application
 	$ yarn start
@@ -28,4 +28,4 @@ Open `http://localhost:3000` in browser!
 
 Restful API Lib'rary with NodeJS Repository [Click Here](https://github.com/asepkh/DW1892OLU_library_api)
 
-![alt text](https://file.mejik.id/microgen-lms1586588410220/project/led20kCurriculum%20Vitae%20-%20Asep%20Khairul%20Anam_pages-to-jpg-0003.jpg)
+![alt text](https://file.mejik.id/microgen-lms1586588410220/project/159f8qAsep%20Khairul%20Anam-2.jpg)
