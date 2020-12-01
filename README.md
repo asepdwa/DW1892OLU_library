@@ -1,9 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ![alt text](https://dw-library.netlify.app/static/media/logo.be77711f.svg)
+*Lib'rary is a digital library platform where users can share and access the available e-books.*
 
-Branch Order (urutan)
-- 1. Landing
-- 2. LandingWithModal (Add modal signin & signup form)
-- 4. Home (Add HomePage, navigation, and many)
-- 8. AddBook (MyLibrary, Profile, Logout, BookContext, Book Detail, Fetch Book Data, and many)
-- Finishing (Admin Verification Book Pages)
-- 10. Add ReadBook Page (add react-reader lib too, fixing some bug, and many)
+## Installation
+#### `Step 1` - Clone it!
+	$ git clone https://github.com/asepkh/DW1892OLU_literature
+   
+#### `Step 2` - Go into the project directory and install dependencies
+	$ yarn install
+
+#### `Step 3` - API url configuration
+	open "./Config/API.js"
+	change variable -> baseURL = "https://literatures.herokuapp.com/api/v1";
+  
+#### `Step 4` - Run application
+	$ yarn start
+  
+Open `http://localhost:3000` in browser!
+
+## Dependencies
+- [React Router](https://www.npmjs.com/package/react-router-dom)
+- [React Bootstrap](https://www.npmjs.com/package/react-bootstrap)
+- [React Icons](https://www.npmjs.com/package/react-icons)
+- [React Easy Crop](https://www.npmjs/package/react-easy-crop)
+- [React Reader](https://www.npmjs/package/react-reader)
+
+> This project was bootstrapped with Create React App.
+
+Restful API Lib'rary with NodeJS Repository [Click Here](https://github.com/asepkh/DW1892OLU_library_api)
+
+![alt text](https://file.mejik.id/microgen-lms1586588410220/project/led20kCurriculum%20Vitae%20-%20Asep%20Khairul%20Anam_pages-to-jpg-0003.jpg)
